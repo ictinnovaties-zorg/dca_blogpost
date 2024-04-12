@@ -72,11 +72,12 @@ def dca(input_prob, true, thold_range=[0,0.35], n=100, thold_odds=False, **plota
         pass
     return dca_plot_values.plot(**plotargs)
 
-def prob_density_plot(df, y, by, title='Density plot', vline=[0.5, 0.2], labels=['No Cancer', 'Cancer'], bw_method=0.15):
+def prob_density_plot(df, y, by, title='Density plot', vline=[0.5, 0.2], labels=['No Cancer', 'Cancer'], bw_method=0.15, *args, **kwargs):
     fig, ax = (df[[by, y]]
         .groupby(by)[y]
-        .plot.kde(legend=True, xlim=(0,1), bw_method=bw_method, title=title))
+        .plot.kde(legend=True, xlim=(0,1), bw_method=bw_method, title=title, *args, **kwargs))
     for v in vline:
         ax.axvline(x=v, color='black', linestyle='--')
     ax.legend(labels)
+    ax.set(*args, **kwargs)
     return fig
